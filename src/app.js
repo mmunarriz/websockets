@@ -29,6 +29,6 @@ const server = app.listen(8080, () => {
 
 const socketServer = new Server(server);
 
-export const emitProductAddedEvent = (products) => {
+export const emitProductEvent = (products) => {
   socketServer.emit('log', products);
 };

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import fs from "fs/promises";
-import { emitProductAddedEvent } from "../app.js";
+import { emitProductEvent } from "../app.js";
 
 const router = Router();
 
@@ -19,6 +19,8 @@ router.get("/", async (req, res) => {
             const limitedProducts = products.slice(0, parseInt(limit));
             res.status(200).send(limitedProducts);
         } else {
+            // Llamar a la función en "app.js" para emitir el evento de WebSocket
+            emitProductEvent(products);
             // Si no se recibió el param "limit", devuelve todos los productos
             res.status(200).send(products);
         }
@@ -102,7 +104,7 @@ router.post("/", async (req, res) => {
         await fs.writeFile("./src/productos.json", JSON.stringify(products, null, 2), "utf8");
 
         // Llamar a la función en "app.js" para emitir el evento de WebSocket
-        emitProductAddedEvent(products);
+        emitProductEvent(products);
 
         res.status(200).send({ message: "Producto agregado exitosamente" });
     } catch (error) {
@@ -155,7 +157,7 @@ router.put("/:pid", async (req, res) => {
         await fs.writeFile("./src/productos.json", JSON.stringify(products, null, 2));
 
         // Llamar a la función en "app.js" para emitir el evento de WebSocket
-        emitProductAddedEvent(products);
+        emitProductEvent(products);
 
         res.status(200).send({ message: "Producto actualizado exitosamente" });
     } catch (error) {
@@ -186,7 +188,7 @@ router.delete("/:pid", async (req, res) => {
         await fs.writeFile("./src/productos.json", JSON.stringify(products, null, 2));
 
         // Llamar a la función en "app.js" para emitir el evento de WebSocket
-        emitProductAddedEvent(products);
+        emitProductEvent(products);
 
         res.status(200).send({ message: "Producto eliminado exitosamente" });
     } catch (error) {
