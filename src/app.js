@@ -32,3 +32,7 @@ const socketServer = new Server(server);
 export const emitProductEvent = (products) => {
   socketServer.emit('log', products);
 };
+
+socketServer.on('connection', socket => {
+  console.log('Nuevo cliente conectado');
+})

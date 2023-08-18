@@ -158,5 +158,15 @@
       "img1.jpg",
       "img2.jpg"
     ]
+  },
+  {
+    "id": 16,
+    "status": true,
+    "title": "producto",
+    "description": "descripcion del producto",
+    "category": "cat1",
+    "price": 200,
+    "code": "abc125",
+    "stock": 10
   }
 ]
