@@ -7,16 +7,26 @@ async function fetchProducts() {
     try {
         const response = await fetch("http://localhost:8080/api/products", requestOptions);
         const data = await response.json();
-        const productosElement = document.getElementById('firstTimeProducts');
+        const products = document.getElementById('firstTimeProducts');
 
         // Limpiar contenido previo
-        productosElement.innerHTML = '';
+        products.innerHTML = '';
 
-        // Actualizar el contenido con los datos obtenidos
-        const formattedData = JSON.stringify(data, null, 4); // Indentacion de 4 spacios
-        const preElement = document.createElement('pre'); // Preservar la estructura de formato JSON
-        preElement.textContent = formattedData;
-        productosElement.appendChild(preElement);
+        // Construir la tabla con los datos de los productos
+        data.forEach(product => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${product.title}</td>
+                <td>${product.description}</td>
+                <td>${product.category}</td>
+                <td>${product.price}</td>
+                <td>${product.code}</td>
+                <td>${product.stock}</td>
+                <td>${product.id}</td>
+                <td>${product.status ? 'Active' : 'Inactive'}</td>
+            `;
+            products.appendChild(row);
+        });
     } catch (error) {
         console.log('error', error);
     }
@@ -26,18 +36,28 @@ fetchProducts();
 
 
 const socket = io();
-const productosElement = document.getElementById('realTimeProducts');
-const productosElementPrev = document.getElementById('firstTimeProducts');
+const productsElement = document.getElementById('realTimeProducts');
+const productsElementPrev = document.getElementById('firstTimeProducts');
 
 socket.on('log', data => {
     // Limpiar contenido previo
-    productosElement.innerHTML = '';
+    productsElement.innerHTML = '';
     // Limpiar contenido previo
-    productosElementPrev.innerHTML = '';
+    productsElementPrev.innerHTML = '';
 
-    // Actualizar el contenido con los datos obtenidos
-    const formattedData = JSON.stringify(data, null, 4); // Indentacion de 4 spacios
-    const preElement = document.createElement('pre'); // Preservar la estructura de formato JSON
-    preElement.textContent = formattedData;
-    productosElement.appendChild(preElement);
+    // Construir la tabla con los datos de los productos
+    data.forEach(product => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+                <td>${product.title}</td>
+                <td>${product.description}</td>
+                <td>${product.category}</td>
+                <td>${product.price}</td>
+                <td>${product.code}</td>
+                <td>${product.stock}</td>
+                <td>${product.id}</td>
+                <td>${product.status ? 'Active' : 'Inactive'}</td>
+            `;
+        productsElement.appendChild(row);
+    });
 })

@@ -1,7 +1,27 @@
-<div>
-  <h1>RealTimeProducts:</h1>
-  <div id="firstTimeProducts"></div>
-  <div id="realTimeProducts"></div>
-</div>
+<main>
+  <section class="py-5 text-center container">
+    <div>
+      <h1>RealTimeProducts</h1>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Code</th>
+              <th>Stock</th>
+              <th>ID</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="firstTimeProducts"></tbody>
+          <tbody id="realTimeProducts"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/realTimeProducts.js"></script>
